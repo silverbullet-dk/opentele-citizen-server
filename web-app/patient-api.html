@@ -1,0 +1,422 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Patient API</title><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200"><style>/* Highlight.js Theme Tomorrow */
+.hljs-comment,.hljs-title{color:#8e908c}.hljs-variable,.hljs-attribute,.hljs-tag,.hljs-regexp,.ruby .hljs-constant,.xml .hljs-tag .hljs-title,.xml .hljs-pi,.xml .hljs-doctype,.html .hljs-doctype,.css .hljs-id,.css .hljs-class,.css .hljs-pseudo{color:#c82829}.hljs-number,.hljs-preprocessor,.hljs-pragma,.hljs-built_in,.hljs-literal,.hljs-params,.hljs-constant{color:#f5871f}.ruby .hljs-class .hljs-title,.css .hljs-rules .hljs-attribute{color:#eab700}.hljs-string,.hljs-value,.hljs-inheritance,.hljs-header,.ruby .hljs-symbol,.xml .hljs-cdata{color:#718c00}.css .hljs-hexcolor{color:#3e999f}.hljs-function,.python .hljs-decorator,.python .hljs-title,.ruby .hljs-function .hljs-title,.ruby .hljs-title .hljs-keyword,.perl .hljs-sub,.javascript .hljs-title,.coffeescript .hljs-title{color:#4271ae}.hljs-keyword,.javascript .hljs-function{color:#8959a8}.hljs{display:block;background:white;color:#4d4d4c;padding:.5em}.coffeescript .javascript,.javascript .xml,.tex .hljs-formula,.xml .javascript,.xml .vbscript,.xml .css,.xml .hljs-cdata{opacity:.5}</style><style>body,
+h4,
+h5 {
+  font-family: 'Roboto' sans-serif !important;
+}
+h1,
+h2,
+h3,
+.aglio {
+  font-family: 'Raleway' sans-serif !important;
+}
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a {
+  display: none;
+}
+h1:hover a,
+h2:hover a,
+h3:hover a,
+h4:hover a,
+h5:hover a {
+  display: inline;
+}
+code {
+  color: #444;
+  background-color: #ddd;
+  font-family: 'Inconsolata' monospace !important;
+}
+a[data-target] {
+  cursor: pointer;
+}
+h4 {
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.back-to-top {
+  position: fixed;
+  z-index: 1;
+  bottom: 0px;
+  right: 24px;
+  padding: 4px 8px;
+  background-color: #eee;
+  text-decoration: none !important;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  border-left: 1px solid rgba(0,0,0,0.1);
+  border-right: 1px solid rgba(0,0,0,0.1);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.panel {
+  overflow: hidden;
+}
+.panel-heading code {
+  margin-left: 3px;
+  color: #c7254e;
+  background-color: rgba(255,255,255,0.7);
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.panel-heading h3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+a.list-group-item:hover {
+  background-color: #f8f8f8;
+  border-left: 2px solid #555;
+  padding-left: 15px;
+}
+.indent {
+  display: block;
+  text-indent: 16px;
+}
+.list-group-item {
+  padding-left: 16px;
+}
+.list-group-item .toggle .open {
+  display: block;
+}
+.list-group-item .toggle .closed {
+  display: none;
+}
+.list-group-item.collapsed .toggle .open {
+  display: none;
+}
+.list-group-item.collapsed .toggle .closed {
+  display: block;
+}
+a.list-group-item {
+  font-size: 13px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+a.list-group-item.heading {
+  font-size: 15px;
+  background-color: #f5f5f5;
+}
+a.list-group-item.heading:hover {
+  background-color: #f8f8f8;
+}
+.list-group-item.collapse {
+  display: none;
+}
+.list-group-item.collapse.in {
+  display: block;
+}
+.list-group-item a span.closed {
+  display: none;
+}
+.list-group-item a span.open {
+  display: block;
+}
+.list-group-item a.collapsed span.closed {
+  display: block;
+}
+.list-group-item a.collapsed span.open {
+  display: none;
+}
+#nav {
+  width: inherit;
+  margin-top: 38px;
+  max-width: 255px;
+  top: 0;
+  bottom: 0;
+  padding-right: 12px;
+  padding-bottom: 12px;
+  overflow-y: auto;
+}
+@media( max-width: 1199px) {
+  #nav {
+    max-width: 212px;
+  }
+}
+</style></head><body><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row"><div class="col-md-3"><nav id="nav" class="hidden-sm hidden-xs affix nav"><div class="list-group"><a data-toggle="" data-target="#entry-point-menu" href="#entry-point" class="list-group-item heading collapsed">Entry Point</a><div id="entry-point-menu"><a href="#entry-point-patient-api-root" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>Patient API Root</a></div></div><div class="list-group"><a data-toggle="" data-target="#patient-menu" href="#patient" class="list-group-item heading collapsed">Patient</a><div id="patient-menu"><a href="#patient-patient" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>Patient</a></div></div><div class="list-group"><a data-toggle="" data-target="#measurements-menu" href="#measurements" class="list-group-item heading collapsed">Measurements</a><div id="measurements-menu"><a href="#measurements-measurement-types" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>Measurement Types</a><a href="#measurements-measurements" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>Measurements</a></div></div></nav></div><div class="col-md-8"><div><header><div class="page-header"><h1 id="top">Patient API</h1></div></header><div class="description"><p>The patient api allows to build OpenTele clients for accessing OpenTele patient data, such as questionnaires, conversations with clinicians etc.</p>
+<h2 id="authentication">Authentication</h2>
+<p>The <strong>Patient API</strong> uses <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">basic authentication</a> over HTTPS. All resources except the root resource requires a proper <code>Authorization</code> header to be present in the request.</p>
+<h2 id="hypermedia">Hypermedia</h2>
+<p>Resources can include a <em>links</em> property containing absolute URLs to related resources.
+This means that clients should not construct the URLs on their own, thus making the maintenance of the URL structure easier.</p>
+<pre><code><span class="hljs-string">"links"</span>: {
+    <span class="hljs-string">"self"</span>: <span class="hljs-string">"https://&lt;host&gt;/patient"</span>,
+    <span class="hljs-string">"password"</span>: <span class="hljs-string">"https://&lt;host&gt;/rest/password/update"</span>,
+    <span class="hljs-string">"measurements"</span>: <span class="hljs-string">"https://&lt;host&gt;/patient/measurements"</span>,
+    <span class="hljs-string">"questionnaires"</span>: <span class="hljs-string">"https://&lt;host&gt;/rest/questionnaire/listing"</span>,
+    <span class="hljs-string">"reminders"</span>: <span class="hljs-string">"https://&lt;host&gt;/rest/reminder/next"</span>
+}
+</code></pre><p>The &lt;host&gt; in the example above will be replaced with the real value.</p>
+<p>The link relation <code>self</code> is the URI pointing the resource being represented.</p>
+<h2 id="schema">Schema</h2>
+<p>All data is sent and received as JSON. Data sent has the <code>content-type</code> header set to <code>application/json</code>.</p>
+<p>Blank fields are included in responses as null:</p>
+<pre><code><span class="hljs-string">"someEmptyField"</span>: <span class="hljs-keyword">null</span>
+</code></pre><p>Timestamps are returned in the format:</p>
+<pre><code><span class="hljs-constant">YYYY</span>-<span class="hljs-constant">MM</span>-<span class="hljs-constant">DDThh</span><span class="hljs-symbol">:mm</span><span class="hljs-symbol">:ss</span>.sTZD
+</code></pre><h2 id="http-verbs">HTTP Verbs</h2>
+<p>The following HTPP verbs are used throughout the api:</p>
+<table>
+<thead>
+<tr>
+<th>Verb</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>Used for retrieving resources</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>Used for creating new resources</td>
+</tr>
+</tbody>
+</table>
+<h2 id="client-errors">Client Errors</h2>
+<p>The common <a href="http://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP Response Status Codes</a> are used.
+The actual status codes used are described in the documentation for the specific resources.</p>
+<h1 id="resources">Resources</h1>
+</div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="entry-point">Entry Point&nbsp;<a href="#entry-point"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="entry-point-patient-api-root">Patient API Root&nbsp;<a href="#entry-point-patient-api-root"><i class="fa fa-link"></i></a></h4><p>Entry point for consuming the API.</p>
+<p>This resource offers basic information about the API version and links to patient related resources. In addition a link to this documentation is also included in the representation.</p>
+<section id="entry-point-patient-api-root-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Retrieve the Entry Point</span></div><div style="float:left"><a href="#entry-point-patient-api-root-get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/</code></div></div><ul class="list-group"><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#e6875963594e673064a4321c55251b83" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="e6875963594e673064a4321c55251b83" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">version</span>": <span class="hljs-value"><span class="hljs-string">"1.0.0"</span></span>,
+    "<span class="hljs-attribute">serverEnvironment</span>": <span class="hljs-value"><span class="hljs-string">"production"</span>
+    <span class="hljs-string">"links"</span>: {
+        "<span class="hljs-attribute">self</span>": <span class="hljs-value"><span class="hljs-string">"https://&lt;host&gt;/"</span></span>,
+        "<span class="hljs-attribute">patient</span>": <span class="hljs-value"><span class="hljs-string">"https://&lt;host&gt;/patient"</span></span>,
+        "<span class="hljs-attribute">api-doc</span>": <span class="hljs-value"><span class="hljs-string">"https://&lt;host&gt;/patient-api.html"</span>
+    </span>}
+</span>}
+</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="patient">Patient&nbsp;<a href="#patient"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="patient-patient">Patient&nbsp;<a href="#patient-patient"><i class="fa fa-link"></i></a></h4><p>The Patient resource is the central resource in the Patient API as it, in addition to information about the patient itself, provides access to the resources a patient can access.</p>
+<section id="patient-patient-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Retrieve Patient</span></div><div style="float:left"><a href="#patient-patient-get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/patient</code></div></div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#f613df5f251322e5386174fc5f1afd2a" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="f613df5f251322e5386174fc5f1afd2a" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic &lt;base64 encoded user token&gt;</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#f416a0c9b43c292430ff8e22a5537165" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="f416a0c9b43c292430ff8e22a5537165" class="list-group-item panel-collapse collapse"><div class="description"><p>JSON representation of Patient resource. In addition to representing its state it offers links to available resources.</p>
+</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">firstName</span>": <span class="hljs-value"><span class="hljs-string">"Nancy Ann"</span></span>,
+    "<span class="hljs-attribute">lastName</span>": <span class="hljs-value"><span class="hljs-string">"Berggren"</span></span>,
+    "<span class="hljs-attribute">passwordExpired</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+    "<span class="hljs-attribute">links</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">self</span>": <span class="hljs-value"><span class="hljs-string">"https://&lt;host&gt;/patient"</span></span>,
+        "<span class="hljs-attribute">password</span>": <span class="hljs-value"><span class="hljs-string">"https://&lt;host&gt;/rest/password/update"</span></span>,
+        "<span class="hljs-attribute">measurements</span>": <span class="hljs-value"><span class="hljs-string">"https://&lt;host&gt;/patient/measurements"</span></span>,
+        "<span class="hljs-attribute">questionnaires</span>": <span class="hljs-value"><span class="hljs-string">"https://&lt;host&gt;/rest/questionnaire/listing"</span></span>,
+        "<span class="hljs-attribute">reminders</span>": <span class="hljs-value"><span class="hljs-string">"https://&lt;host&gt;/rest/reminder/next"</span></span>,
+        "<span class="hljs-attribute">messageThreads</span>": <span class="hljs-value"><span class="hljs-string">"https://&lt;host&gt;/rest/message/recipients"</span></span>,
+        "<span class="hljs-attribute">unreadMessages</span>": <span class="hljs-value"><span class="hljs-string">"https://&lt;host&gt;/rest/message/list"</span></span>,
+        "<span class="hljs-attribute">acknowledgements</span>": <span class="hljs-value"><span class="hljs-string">"https://&lt;host&gt;/rest/questionnaire/acknowledgements"</span>
+    </span>}
+</span>}
+</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="measurements">Measurements&nbsp;<a href="#measurements"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="measurements-measurement-types">Measurement Types&nbsp;<a href="#measurements-measurement-types"><i class="fa fa-link"></i></a></h4><p>For a patient measurements performed as part of answering questionnaires can be retrieved.
+The measurements are grouped according to the type of measurement, e.g. blood sugar measurements are grouped as a type.</p>
+<section id="measurements-measurement-types-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Retrieve available measurement types</span></div><div style="float:left"><a href="#measurements-measurement-types-get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/patient/measurements</code></div></div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#d3efbfce8a17a68947030ddbde5a67e3" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="d3efbfce8a17a68947030ddbde5a67e3" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic &lt;base64 encoded user token&gt;</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#cc7d9602ee0287818679b2c06fb4e4d5" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="cc7d9602ee0287818679b2c06fb4e4d5" class="list-group-item panel-collapse collapse"><div class="description"><p>JSON representation of the list of available measurement types a client can retrieve.
+Each measurement type is represented as its own link relation.</p>
+</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">measurements</span>": <span class="hljs-value">[{
+        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"blood_pressure"</span></span>,
+        "<span class="hljs-attribute">links</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">measurement</span>": <span class="hljs-value"><span class="hljs-string">"https://&lt;host&gt;/patient/measurements/blood_pressure"</span>
+        </span>}
+    </span>}, {
+        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"pulse"</span></span>,
+        "<span class="hljs-attribute">links</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">measurement</span>": <span class="hljs-value"><span class="hljs-string">"https://&lt;host&gt;/patient/measurements/pulse"</span>
+        </span>}
+    </span>}, {
+        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"weight"</span></span>,
+        "<span class="hljs-attribute">links</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">measurement</span>": <span class="hljs-value"><span class="hljs-string">"https://&lt;host&gt;/patient/measurements/weight"</span>
+        </span>}
+    </span>}, {
+        "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"bloodsugar"</span></span>,
+        "<span class="hljs-attribute">links</span>": <span class="hljs-value">{
+            "<span class="hljs-attribute">measurement</span>": <span class="hljs-value"><span class="hljs-string">"https://&lt;host&gt;/patient/measurements/bloodsugar"</span>
+        </span>}
+    </span>}]</span>,
+    "<span class="hljs-attribute">links</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">self</span>": <span class="hljs-value"><span class="hljs-string">"http://&lt;host&gt;/patient/measurements"</span>
+    </span>}
+</span>}
+</code></pre></li></ul></section><h4 id="measurements-measurements">Measurements&nbsp;<a href="#measurements-measurements"><i class="fa fa-link"></i></a></h4><p>Measurements for a specific measurement type can be retrieved using a time filter (using the {filter} parameter), the default time filter is ‘week’.</p>
+<p>The representation of measurements differ slightly based on the measurement type requested. The representation variants shown in the table below exist:</p>
+<table>
+<thead>
+<tr>
+<th>Representation</th>
+<th>Measurement type(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Simple</td>
+<td>pulse, weight, temperature, urine, hemoglobin, crp, saturation, lung_function</td>
+</tr>
+<tr>
+<td>Blood sugar</td>
+<td>bloodsugar</td>
+</tr>
+<tr>
+<td>Blood pressure</td>
+<td>blood_pressure</td>
+</tr>
+</tbody>
+</table>
+<section id="measurements-measurements-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">Retrieve Measurements</span></div><div style="float:left"><a href="#measurements-measurements-get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/patient/measurements/{id}?filter={filter}</code></div></div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>filter</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>week</span></span>&nbsp;<p>Time filter specifying for how long back in time to get measurements.</p>
+<p><strong>Choices:&nbsp;</strong><code>week</code> <code>month</code> <code>quarter</code> <code>year</code> <code>all</code> </p></dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#0a10b83940ca1bff828ecb4bb52cfb2a" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="0a10b83940ca1bff828ecb4bb52cfb2a" class="list-group-item panel-collapse collapse"><div class="description"></div><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic &lt;base64 encoded user token&gt;</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#75b08cce17bee751d92bcbf527d67acb" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="75b08cce17bee751d92bcbf527d67acb" class="list-group-item panel-collapse collapse"><div class="description"><p>JSON representation of a series of measurements for the requested measurement type in the requested time interval.</p>
+</div><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>Measurement representation = <span class="hljs-string">'Simple'</span>
+{
+    <span class="hljs-string">"type"</span>: <span class="hljs-string">"pulse"</span>,
+    <span class="hljs-string">"unit"</span>: <span class="hljs-string">"BPM"</span>,
+    <span class="hljs-string">"measurements"</span>: [{
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2014-10-19T00:00:00.000+02:00"</span>,
+        <span class="hljs-string">"measurement"</span>: <span class="hljs-number">57</span>
+    }, {
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2014-09-19T00:00:00.000+02:00"</span>,
+        <span class="hljs-string">"measurement"</span>: <span class="hljs-number">50</span>
+    }, {
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2014-08-19T00:00:00.000+02:00"</span>,
+        <span class="hljs-string">"measurement"</span>: <span class="hljs-number">56</span>
+    }, {
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2014-02-19T00:00:00.000+01:00"</span>,
+        <span class="hljs-string">"measurement"</span>: <span class="hljs-number">57</span>
+    }, {
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2014-01-19T00:00:00.000+01:00"</span>,
+        <span class="hljs-string">"measurement"</span>: <span class="hljs-number">51</span>
+    }, {
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2013-12-19T00:00:00.000+01:00"</span>,
+        <span class="hljs-string">"measurement"</span>: <span class="hljs-number">52</span>
+    }],
+    <span class="hljs-string">"links"</span>: {
+        <span class="hljs-string">"self"</span>: <span class="hljs-string">"https://&lt;host&gt;/patient/measurements/pulse"</span>
+    }
+}
+
+Measurement representation = <span class="hljs-string">'Blood sugar'</span>:
+{
+    <span class="hljs-string">"type"</span>: <span class="hljs-string">"bloodsugar"</span>,
+    <span class="hljs-string">"unit"</span>: <span class="hljs-string">"mmol/L"</span>,
+    <span class="hljs-string">"measurements"</span>: [{
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2014-10-18T02:00:00.000+02:00"</span>,
+        <span class="hljs-string">"measurement"</span>: {
+            <span class="hljs-string">"value"</span>: <span class="hljs-number">7.199999809265137</span>,
+            <span class="hljs-string">"isAfterMeal"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"isBeforeMeal"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"isControlMeasurement"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"isOutOfBounds"</span>: <span class="hljs-literal">null</span>,
+            <span class="hljs-string">"otherInformation"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"hasTemperatureWarning"</span>: <span class="hljs-literal">null</span>
+        }
+    }, {
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2013-04-27T15:10:00.000+02:00"</span>,
+        <span class="hljs-string">"measurement"</span>: {
+            <span class="hljs-string">"value"</span>: <span class="hljs-number">8</span>,
+            <span class="hljs-string">"isAfterMeal"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"isBeforeMeal"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"isControlMeasurement"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"isOutOfBounds"</span>: <span class="hljs-literal">null</span>,
+            <span class="hljs-string">"otherInformation"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"hasTemperatureWarning"</span>: <span class="hljs-literal">null</span>
+        }
+    }, {
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2013-03-28T15:10:00.000+01:00"</span>,
+        <span class="hljs-string">"measurement"</span>: {
+            <span class="hljs-string">"value"</span>: <span class="hljs-number">8</span>,
+            <span class="hljs-string">"isAfterMeal"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"isBeforeMeal"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"isControlMeasurement"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"isOutOfBounds"</span>: <span class="hljs-literal">null</span>,
+            <span class="hljs-string">"otherInformation"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"hasTemperatureWarning"</span>: <span class="hljs-literal">null</span>
+        }
+    }, {
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2013-02-26T15:10:00.000+01:00"</span>,
+        <span class="hljs-string">"measurement"</span>: {
+            <span class="hljs-string">"value"</span>: <span class="hljs-number">8</span>,
+            <span class="hljs-string">"isAfterMeal"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"isBeforeMeal"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"isControlMeasurement"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"isOutOfBounds"</span>: <span class="hljs-literal">null</span>,
+            <span class="hljs-string">"otherInformation"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"hasTemperatureWarning"</span>: <span class="hljs-literal">null</span>
+        }
+    }, {
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2013-01-27T15:10:00.000+01:00"</span>,
+        <span class="hljs-string">"measurement"</span>: {
+            <span class="hljs-string">"value"</span>: <span class="hljs-number">8</span>,
+            <span class="hljs-string">"isAfterMeal"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"isBeforeMeal"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"isControlMeasurement"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"isOutOfBounds"</span>: <span class="hljs-literal">null</span>,
+            <span class="hljs-string">"otherInformation"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"hasTemperatureWarning"</span>: <span class="hljs-literal">null</span>
+        }
+    }],
+    <span class="hljs-string">"links"</span>: {
+        <span class="hljs-string">"self"</span>: <span class="hljs-string">"https://&lt;host&gt;/patient/measurements/bloodsugar"</span>
+    }
+}
+
+Measurement representation = <span class="hljs-string">'Blood pressure'</span>:
+{
+    <span class="hljs-string">"type"</span>: <span class="hljs-string">"blood_pressure"</span>,
+    <span class="hljs-string">"unit"</span>: <span class="hljs-string">"mmHg"</span>,
+    <span class="hljs-string">"measurements"</span>: [{
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2014-10-27T12:25:12.934+01:00"</span>,
+        <span class="hljs-string">"measurement"</span>: {
+            <span class="hljs-string">"systolic"</span>: <span class="hljs-number">130</span>,
+            <span class="hljs-string">"diastolic"</span>: <span class="hljs-number">65</span>
+        }
+    }, {
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2014-03-19T00:00:00.000+01:00"</span>,
+        <span class="hljs-string">"measurement"</span>: {
+            <span class="hljs-string">"systolic"</span>: <span class="hljs-number">123</span>,
+            <span class="hljs-string">"diastolic"</span>: <span class="hljs-number">80</span>
+        }
+    }, {
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2014-02-19T00:00:00.000+01:00"</span>,
+        <span class="hljs-string">"measurement"</span>: {
+            <span class="hljs-string">"systolic"</span>: <span class="hljs-number">122</span>,
+            <span class="hljs-string">"diastolic"</span>: <span class="hljs-number">80</span>
+        }
+    }, {
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2014-01-19T00:00:00.000+01:00"</span>,
+        <span class="hljs-string">"measurement"</span>: {
+            <span class="hljs-string">"systolic"</span>: <span class="hljs-number">121</span>,
+            <span class="hljs-string">"diastolic"</span>: <span class="hljs-number">80</span>
+        }
+    }, {
+        <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2013-12-19T00:00:00.000+01:00"</span>,
+        <span class="hljs-string">"measurement"</span>: {
+            <span class="hljs-string">"systolic"</span>: <span class="hljs-number">120</span>,
+            <span class="hljs-string">"diastolic"</span>: <span class="hljs-number">80</span>
+        }
+    }],
+    <span class="hljs-string">"links"</span>: {
+        <span class="hljs-string">"self"</span>: <span class="hljs-string">"https://&lt;host&gt;/patient/measurements/blood_pressure"</span>
+    }
+}
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>422</code></strong><a data-toggle="collapse" data-target="#c846bf58c44fe51c394248ac2b27b18d" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="c846bf58c44fe51c394248ac2b27b18d" class="list-group-item panel-collapse collapse"><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"Validation failed"</span></span>,
+    "<span class="hljs-attribute">errors</span>": <span class="hljs-value">[{
+        "<span class="hljs-attribute">resource</span>": <span class="hljs-value"><span class="hljs-string">"measurements"</span></span>,
+        "<span class="hljs-attribute">field</span>": <span class="hljs-value"><span class="hljs-string">"filter"</span></span>,
+        "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"invalid"</span>
+    </span>}]
+</span>}
+</code></pre></li></ul></section></div></div></div></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 17 Nov 2014</p><div id="localFile" style="display: none; position: absolute; top: 0; left: 0; width: 100%; color: white; background: red; font-size: 150%; text-align: center; padding: 1em;">This page may not display correctly when opened as a local file. Instead, view it from a web server.
+
+</div></body><script src="//code.jquery.com/jquery-1.11.0.min.js"></script><script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script>(function() {
+  if (location.protocol === 'file:') {
+    document.getElementById('localFile').style.display = 'block';
+  }
+
+}).call(this);
+</script><script>(function() {
+  $('table').addClass('table');
+
+}).call(this);
+</script></html>
