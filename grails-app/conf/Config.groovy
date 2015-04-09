@@ -2,6 +2,8 @@ import org.apache.log4j.DailyRollingFileAppender
 
 grails.config.locations = [ "file:c:/kihdatamon/settings/datamon-citizen-config.properties", "file:${userHome}/.kih/datamon-citizen-config.properties"]
 
+logging.suffix = ""
+
 grails.session.timeout.default = 30
 
 grails.project.groupId = appName
@@ -87,6 +89,8 @@ grails.plugin.databasemigration.changelogLocation = "$pluginDir/grails-app/migra
 grails.plugin.databasemigration.dropOnStart = false
 grails.plugin.databasemigration.updateOnStart = false
 
+milou.realtimectg.maxPerPatient = 100
+
 // set per-environment serverURL stem for creating absolute links
 environments {
 	development {
@@ -100,38 +104,30 @@ environments {
         video.enabled = true
         video.serviceURL = 'https://silverbullet.vconf.dk/services/v1_1/VidyoPortalUserService/'
         video.client.serviceURL = 'https://silverbullet.vconf.dk/services/VidyoPortalGuestService/'
-
-        running.ctg.messaging.enabled = true
-	    milou.realtimectg.url = 'http://195.67.117.70:2626/Milou/OpenTeleRT'
-        milou.realtimeRun = true
-        milou.realtimeRepeatIntervalMillis = 10000
     }
     performance {
-        milou.realtimectg.url = 'http://195.67.117.70:2626/Milou/OpenTeleRT'
-        milou.realtimeRun = true
-        milou.realtimeRepeatIntervalMillis = 10000
-        running.ctg.messaging.enabled = true
     }
     test {
-        milou.realtimectg.url = 'http://195.67.117.70:2626/Milou/OpenTeleRT'
-        milou.realtimeRun = true
-        milou.realtimeRepeatIntervalMillis = 10000
-        running.ctg.messaging.enabled = true
     }
 }
 
-String logDirectory = "${System.getProperty('catalina.base') ?: '.'}/logs"
 
 // Logging
+String logDirectory = "${System.getProperty('catalina.base') ?: '.'}/logs"
 String commonPattern = "%d [%t] %-5p %c{2} %x - %m%n"
+def appContext = { logging.suffix != "" ? "-${logging.suffix}" : "" }
 
 log4j = {
     appenders {
         console name: "stdout",
                 layout: pattern(conversionPattern: commonPattern)
         appender new DailyRollingFileAppender(
+                name:"stacktrace", datePattern: "'.'yyyy-MM-dd",
+                file:"${logDirectory}/stacktrace-citizen${appContext()}.log",
+                layout: pattern(conversionPattern: commonPattern))
+        appender new DailyRollingFileAppender(
                 name:"opentele", datePattern: "'.'yyyy-MM-dd",
-                file:"${logDirectory}/opentele-citizen.log",
+                file:"${logDirectory}/opentele-citizen${appContext()}.log",
                 layout: pattern(conversionPattern: commonPattern))
     }
 
@@ -191,7 +187,8 @@ grails.plugin.springsecurity.password.hash.iterations = 1
 
 grails.plugin.springsecurity.securityConfigType = 'Annotation'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-        '/patient-api.html': ['IS_AUTHENTICATED_ANONYMOUSLY']
+        '/patient-api.html': ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/dbconsole/**': [org.opentele.server.core.model.types.PermissionName.WEB_LOGIN],
 ]
 
 grails.plugin.springsecurity.filterChain.chainMap = [
@@ -200,7 +197,7 @@ grails.plugin.springsecurity.filterChain.chainMap = [
         '/isAlive': 'nonAuthFilter',
         '/isAlive/json': 'nonAuthFilter',
         '/isAlive/html': 'nonAuthFilter',
-        '/**': 'JOINED_FILTERS,-exceptionTranslationFilter,-sessionManagementFilter'
+        '/**': 'JOINED_FILTERS,-exceptionTranslationFilter,-sessionManagementFilter',
 ]
 grails.plugin.springsecurity.providerNames = [
         'caseInsensitivePasswordAuthenticationProvider',

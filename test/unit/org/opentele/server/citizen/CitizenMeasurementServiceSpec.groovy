@@ -563,7 +563,6 @@ class CitizenMeasurementServiceSpec extends Specification {
         cgmData.ids == null // Not used for anything anyway
     }
 
-
     void 'Can handle CGM measurement without any events'() {
         setup:
         def measurement = new MeasurementBuilder().ofType(MeasurementTypeName.CONTINUOUS_BLOOD_SUGAR_MEASUREMENT).atTime(2013, Calendar.JANUARY, 10).inQuestionnaire(completedQuestionnaire).build()

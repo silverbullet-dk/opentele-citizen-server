@@ -1,4 +1,5 @@
 import org.opentele.server.core.model.Schedule
+import org.opentele.server.model.Patient
 
 testDataConfig {
     sampleData {
@@ -20,7 +21,11 @@ testDataConfig {
             internalDaysInMonth = ""
         }
         'org.opentele.server.model.User' {
-            password: "foobar1234"
+            password = "foobar1234"
+        }
+        'org.opentele.server.model.Patient' {
+            def i = 1000000000
+            cpr = {-> "${i++}"}
         }
     }
 }

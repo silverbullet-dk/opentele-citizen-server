@@ -25,3 +25,5 @@ lib/jtds-1.2.6.jar
 /citizenDb.h2.db
 /citizenDb.trace.db
 /citizenDb.lock.db
+test/cli/SetConfiguration/Config.groovy
+grails-app/conf/datamon*.properties

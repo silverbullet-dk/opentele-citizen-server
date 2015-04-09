@@ -8,7 +8,7 @@ eventWebXmlStart = { webXmlFile ->
 }
 
 eventCompileEnd = {
-    ant.copy(file: "${basedir}/etc/testdb/citizenDb.h2.db",
+    ant.copy(file: "${basedir}/etc/testdb/devDb.h2.db",
             tofile: "${basedir}/citizenDb.h2.db",
             overwrite: "true",
             preservelastmodified: "true")

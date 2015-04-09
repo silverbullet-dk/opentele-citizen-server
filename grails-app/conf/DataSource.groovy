@@ -1,3 +1,5 @@
+import org.opentele.server.core.model.BootStrapUtil
+
 dataSource {
     pooled = true
     logSql = false
@@ -5,8 +7,8 @@ dataSource {
 hibernate {
     cache.use_second_level_cache = true
     cache.use_query_cache = true
+    cache.region.factory_class = 'org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory' // hibernate 4
     //cache.region.factory_class = 'org.hibernate.cache.ehcache.EhCacheRegionFactory' // hibernate 4
-    cache.region.factory_class = 'net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory' // hibernate 3
 }
 // environment specific settings
 environments {

@@ -94,14 +94,15 @@ grails.project.dependency.resolution = {
     plugins {
         runtime ":build-test-data:2.2.2"
 
-        runtime ":hibernate:3.6.10.18"
+        //runtime ":hibernate:3.6.10.18"
+        runtime ":hibernate4:4.3.5.5"
         runtime ":jquery:1.11.0.2"
         runtime ":resources:1.2.8"
-        runtime ":kih-auditlog:1.0"
+        runtime ":kih-auditlog:1.1"
         compile ":webflow:2.1.0"
         compile ":quartz:1.0.2"
 
-        build ":tomcat:8.0.15"
+        build ":tomcat:7.0.54"
 
         runtime ":codenarc:0.22"
         runtime ":famfamfam:1.0.1"

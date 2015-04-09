@@ -1,5 +1,7 @@
 import grails.plugin.springsecurity.SpringSecurityUtils
+import grails.util.Environment
 import org.opentele.server.core.UserDetailsService
+import org.opentele.server.core.model.BootStrapUtil
 import org.opentele.server.core.util.CaseInsensitivePasswordAuthenticationProvider
 import org.opentele.server.core.util.CustomPropertyEditorRegistrar
 import org.opentele.server.core.util.OpenTeleSecurityBadCredentialsEventListener
@@ -67,5 +69,13 @@ beans = {
     concurrentSessionFilter(ConcurrentSessionFilter){
         sessionRegistry = sessionRegistry
         expiredUrl = '/login/concurrentSession'
+    }
+
+    if(Environment.current.name == 'development' && !BootStrapUtil.isH2DatabaseServerRunning("jdbc:h2:tcp://localhost:8043/clinicianDb", "sa", "")) {
+        h2Server(org.h2.tools.Server, "-tcp,-tcpPort,8043") { bean ->
+            bean.factoryMethod = "createTcpServer"
+            bean.initMethod = "start"
+            bean.destroyMethod = "stop"
+        }
     }
 }

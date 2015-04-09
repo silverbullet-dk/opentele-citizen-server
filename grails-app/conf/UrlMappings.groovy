@@ -98,7 +98,8 @@ class UrlMappings {
             action = [GET:"acknowledgements"]
         }
 
-        "/rest/$controller/markAsRead"(parseRequest:true){
+        "/rest/message/markAsRead"(parseRequest:true){
+            controller = "patientMessage"
             action = [POST:"markAsRead"]
         }
 
